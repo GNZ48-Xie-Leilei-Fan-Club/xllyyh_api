@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from api.views.keyworded_response import KeywordedResponseList
+from api.views.keyworded_response import KeywordedResponseList, IgnoreNumberList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/keyworded_response/', KeywordedResponseList.as_view()),
+    path('api/keyworded_responses/', KeywordedResponseList.as_view()),
+    path('api/ignore_numbers/', IgnoreNumberList.as_view())
 ]
