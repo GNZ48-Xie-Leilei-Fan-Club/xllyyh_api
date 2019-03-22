@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
  
-from api.models.keyworded_response import KeywordedResponse, IgnoreNumber
+from api.chatbot.models import KeywordedResponse, IgnoreNumber
 
 admin.site.register(KeywordedResponse)
 admin.site.register(IgnoreNumber)

@@ -1,6 +1,6 @@
 from rest_framework_json_api import serializers
 
-from api.models.keyworded_response import KeywordedResponse, IgnoreNumber
+from api.chatbot.models.keyworded_response import KeywordedResponse, IgnoreNumber
 
 class KeywordedResponseSerializer(serializers.ModelSerializer):
     class Meta:

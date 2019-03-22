@@ -14,12 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
-from api.views.keyworded_response import KeywordedResponseList, IgnoreNumberList
+from api.chatbot.views.keyworded_response import KeywordedResponseList, IgnoreNumberList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/keyworded_responses/', KeywordedResponseList.as_view()),
-    path('api/ignore_numbers/', IgnoreNumberList.as_view())
+    path('api/chatbot/', include('api.chatbot.urls')),
 ]
