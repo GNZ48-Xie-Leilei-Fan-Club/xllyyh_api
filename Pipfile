@@ -12,6 +12,7 @@ pymysql = "*"
 djangorestframework-jsonapi = "*"
 django-filter = "*"
 gunicorn = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
