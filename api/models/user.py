@@ -12,3 +12,6 @@ class ModianUser(TimeStampedModel):
     modian_name = models.CharField(max_length=50)
     cards = models.ManyToManyField('Card', through='CardUserAssociation')
 
+
+    def __str__(self):
+        return '{} : {}'.format(self.modian_name, self.modian_id)
