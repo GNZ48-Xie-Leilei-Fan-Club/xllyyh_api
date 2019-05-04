@@ -1,7 +1,8 @@
+from django_extensions.db.models import TimeStampedModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-class KeywordedResponse(models.Model):
+class KeywordedResponse(TimeStampedModel):
     keyword = models.TextField(verbose_name=_('关键词'))
     response = models.TextField(verbose_name=_('应答'))
 
@@ -16,7 +17,7 @@ class KeywordedResponse(models.Model):
         resource_name = 'keyworded_responses'
 
 
-class IgnoreNumber(models.Model):
+class IgnoreNumber(TimeStampedModel):
     number = models.TextField(verbose_name='QQ号', max_length=30)
     note = models.TextField(verbose_name='备注')
 

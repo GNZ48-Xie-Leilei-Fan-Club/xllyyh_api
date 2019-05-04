@@ -6,13 +6,19 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = "*"
+django = "~=2.2"
 django-rest-framework = "*"
 pymysql = "*"
 djangorestframework-jsonapi = "*"
 django-filter = "*"
 gunicorn = "*"
 pillow = "*"
+django-extensions = "*"
+requests = "*"
+django-celery-beat = "*"
+redis = "*"
+ipdb = "*"
+django-model-utils = "*"
 
 [requires]
 python_version = "3.7"

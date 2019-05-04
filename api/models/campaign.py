@@ -1,16 +1,28 @@
+from django_extensions.db.models import TimeStampedModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
+from model_utils import FieldTracker
 
-class Campaign(models.Model):
+class Campaign(TimeStampedModel):
     project_id = models.CharField(primary_key=True, max_length=20)
-    goal = models.DecimalField(decimal_places=2, max_digits=10)
-    amount = models.DecimalField(decimal_places=2, max_digits=10)
+    goal = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
+    amount = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    active_since = models.DateTimeField(default=timezone.now, null=False, blank=False)
+    is_active_tracker = FieldTracker(fields=['is_active'])
+    last_scan_timestamp = models.DateTimeField(null=True, blank=True)
 
 
-class Order(models.Model):
-    order_id = models.CharField(primary_key=True, max_length=20)
+    def save(self, *args, **kwargs):
+        if self.is_active_tracker.has_changed('is_active') and self.is_active_tracker.changed()['is_active'] is False:
+            self.active_since = timezone.now()
+        super().save(*args, **kwargs)
+
+
+class Order(TimeStampedModel):
     amount = models.DecimalField(decimal_places=2, max_digits=10)
-    user_profile = models.ForeignKey('UserProfile', blank=False, on_delete=models.CASCADE)
-    campaign = models.ForeignKey('Campaign', blank=False, on_delete=models.CASCADE)
+    modian_user = models.ForeignKey('ModianUser', blank=True, null=True, on_delete=models.CASCADE)
+    campaign = models.ForeignKey('Campaign', blank=True, null=True, on_delete=models.CASCADE)
     transaction = models.OneToOneField('DrawTransaction', null=True, blank=True, on_delete=models.SET_NULL)
-    timestamp = models.DateTimeField()
+    payment_timestamp = models.DateTimeField()
