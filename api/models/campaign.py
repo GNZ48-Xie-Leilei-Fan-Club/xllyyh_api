@@ -20,7 +20,7 @@ class Campaign(TimeStampedModel):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.project_name
+        return self.project_name or 'No name'
 
 
 class Order(TimeStampedModel):
