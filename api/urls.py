@@ -21,4 +21,5 @@ from api.chatbot.views.keyworded_response import KeywordedResponseList, IgnoreNu
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/chatbot/', include('api.chatbot.urls')),
+    path('api/battle/', include('api.battle.urls')),
 ]
