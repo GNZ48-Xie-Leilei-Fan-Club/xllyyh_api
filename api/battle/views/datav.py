@@ -8,7 +8,7 @@ from api.models.battle import BattleCampaign
 class IndividualView(View):
 
     def get(self, request):
-        all_campaigns = BattleCampaign.objects.all()
+        all_campaigns = BattleCampaign.objects.all().order_by('id')
         response_array = []
         for campaign in all_campaigns:
             response_array.append(
