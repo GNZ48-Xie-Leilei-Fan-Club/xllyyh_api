@@ -39,7 +39,7 @@ def fetch_battle_campaign_details():
         project_id = campaign.project_id
         client = ModianClient(project_id)
         try:
-            campaign.amount = client.get_campaign_details()['data']['already_raised']
+            campaign.amount = client.get_campaign_details()['data'][0]['already_raised']
             campaign.save()
         except:
             pass
