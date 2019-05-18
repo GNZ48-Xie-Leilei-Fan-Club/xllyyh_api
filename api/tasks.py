@@ -22,7 +22,11 @@ def fetch_modian_campaign_orders():
                     user_id = order['user_id']
                     payment_timestamp = parse_datetime(order['pay_time'])
                     modian_name = order['nickname']
-                    user, created = ModianUser.objects.get_or_create(modian_id=user_id, modian_name=modian_name)
+                    user, created = ModianUser.objects.get_or_create(modian_id=user_id)
+                    if not created:
+                        if user.modian_name != modian_name:
+                            user.modian_name = modian_name
+                            user.save()
                     if not Order.objects.filter(amount=amount, modian_user=user, payment_timestamp=payment_timestamp, campaign=campaign).exists() or payment_timestamp < active_since:
                         order = Order.objects.create(amount=amount, modian_user=user, payment_timestamp=payment_timestamp, campaign=campaign)
                     else:

@@ -8,7 +8,7 @@ class FanClubUser(AbstractUser, TimeStampedModel):
 
 
 class ModianUser(TimeStampedModel):
-    modian_id = models.CharField(max_length=50)
+    modian_id = models.CharField(max_length=50, unique=True)
     modian_name = models.CharField(max_length=50)
     cards = models.ManyToManyField('Card', through='CardUserAssociation')
 
