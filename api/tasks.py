@@ -27,7 +27,7 @@ def fetch_modian_campaign_orders():
                         if user.modian_name != modian_name:
                             user.modian_name = modian_name
                             user.save()
-                    if not Order.objects.filter(amount=amount, modian_user=user, payment_timestamp=payment_timestamp, campaign=campaign).exists() or payment_timestamp < active_since:
+                    if not Order.objects.filter(amount=amount, modian_user=user, payment_timestamp=payment_timestamp, campaign=campaign).exists():
                         order = Order.objects.create(amount=amount, modian_user=user, payment_timestamp=payment_timestamp, campaign=campaign)
                     else:
                         no_new_orders = True
