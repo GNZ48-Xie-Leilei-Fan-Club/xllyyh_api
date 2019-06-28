@@ -9,3 +9,7 @@ class BattleCampaign(models.Model):
 
     def __str__(self):
         return self.member_name or 'No name'
+
+
+class BattleNotification(models.Model):
+    message = models.CharField(blank=True, null=True, max_length=500)

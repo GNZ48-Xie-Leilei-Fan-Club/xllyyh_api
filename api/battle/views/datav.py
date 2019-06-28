@@ -2,7 +2,7 @@ import json
 from django.http import HttpResponse
 from django.views import View
 
-from api.models.battle import BattleCampaign
+from api.models.battle import BattleCampaign, BattleNotification
 
 
 class IndividualView(View):
@@ -24,3 +24,10 @@ class GroupView(View):
 
     def get(self, request):
         return HttpResponse(json.dumps([{'a':'b'}]))
+
+
+class NotificationView(View):
+
+    def get(self, request):
+        message = BattleNotification.objects.all().first().message
+        return HttpResponse(json.dumps({'value': message}))
