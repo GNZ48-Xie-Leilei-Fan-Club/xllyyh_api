@@ -30,4 +30,4 @@ class NotificationView(View):
 
     def get(self, request):
         message = BattleNotification.objects.all().first().message
-        return HttpResponse(json.dumps({'value': message}))
+        return HttpResponse(json.dumps([{'value': message}]))
