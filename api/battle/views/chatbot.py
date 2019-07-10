@@ -20,10 +20,7 @@ class IndividualBattleBroadcastView(View):
                 for group in all_groups:
                     group_result_dict[group.group_name] = group.total
                 response_text += '\n分组战况(系数后):\n'
-                print(OrderedDict(sorted(group_result_dict.items(), key=lambda t: t[1])))
-                for item in OrderedDict(sorted(group_result_dict.items(), key=lambda t: t[1])):
-                    print(item)
-                    print(group_result_dict[item])
+                for item in OrderedDict(sorted(group_result_dict.items(), key=lambda t: t[1], reverse=True)):
                     response_text += '{}: {}\n'.format(item, group_result_dict[item])
             
             return HttpResponse(json.dumps({
