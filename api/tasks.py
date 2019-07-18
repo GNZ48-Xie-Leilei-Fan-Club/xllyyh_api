@@ -3,7 +3,7 @@ from celery import task
 from django.utils.dateparse import parse_datetime
 
 from .modian.utils import ModianClient
-from api.models import Campaign, Order, ModianUser, BattleCampaign
+from api.models import Campaign, Order, ModianUser, BattleCampaign, MonitorCampaign
 
 @task()
 def fetch_modian_campaign_orders():
@@ -46,6 +46,20 @@ def fetch_battle_campaign_details():
             campaign_details = client.get_campaign_details()['data'][0]
             campaign.amount = campaign_details['already_raised']
             campaign.number_of_participants = campaign_details['backer_count']
+            campaign.save()
+        except:
+            pass
+
+
+@task()
+def fetch_monitor_campaign_details():
+    all_monitor_campaigns = MonitorCampaign.objects.all()
+    for campaign in all_monitor_campaigns:
+        project_id = campaign.project_id
+        client = ModianClient(project_id)
+        try:
+            campaign_details = client.get_campaign_details()['data'][0]
+            campaign.amount = campaign_details['already_raised']
             campaign.save()
         except:
             pass

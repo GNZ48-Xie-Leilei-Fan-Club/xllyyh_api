@@ -4,3 +4,5 @@ from api.models.keyworded_response import *
 from api.models.transaction import *
 from api.models.user import *
 from api.models.battle import *
+from api.models.monitor import *
+
