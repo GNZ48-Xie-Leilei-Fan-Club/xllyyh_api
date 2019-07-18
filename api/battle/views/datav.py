@@ -37,7 +37,7 @@ class NotificationView(View):
 class MonitorView(View):
 
     def get(self, request):
-        all_members = MonitorMember.objects.all().order_by('-base_amount')[:7]
+        all_members = MonitorMember.objects.all().order_by('-base_amount')
         response_array = []
         for member in all_members:
             response_array.append(
