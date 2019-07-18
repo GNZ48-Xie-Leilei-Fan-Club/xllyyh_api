@@ -22,6 +22,6 @@ class MonitorMember(models.Model):
         total_amount = self.base_amount
         campaigns = MonitorCampaign.objects.filter(member=self)
         for campaign in campaigns:
-            campaign_true_amount = campaign.amount*campaign.coefficient - campaign.deduction*coefficient
+            campaign_true_amount = campaign.amount*campaign.coefficient - campaign.deduction*campaign.coefficient
             total_amount += campaign_true_amount
         return total_amount
