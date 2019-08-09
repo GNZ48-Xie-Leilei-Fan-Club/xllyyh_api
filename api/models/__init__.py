@@ -5,4 +5,4 @@ from api.models.transaction import *
 from api.models.user import *
 from api.models.battle import *
 from api.models.monitor import *
-
+from api.models.event_notice import *
