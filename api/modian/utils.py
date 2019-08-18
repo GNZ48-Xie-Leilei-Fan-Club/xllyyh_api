@@ -3,6 +3,7 @@ import json
 import urllib
 import hashlib
 import time
+import re
 
 
 class ModianClient():
@@ -14,7 +15,7 @@ class ModianClient():
         self.per_page = 20
         self.order_count_last_scanned = None
         self.campaign_orders_link = 'https://wds.modian.com/api/project/orders'
-        self.campaign_detail_link = 'https://wds.modian.com/api/project/detail'
+        self.campaign_detail_link = 'https://zhongchou.modian.com/realtime/get_simple_product?ids={}'
         self.campaign_rankings_link = 'https://wds.modian.com/api/project/rankings'
         self.timeout = 15
 
@@ -42,8 +43,9 @@ class ModianClient():
         return payload
 
     def get_campaign_details(self):
-        response = requests.post(self.campaign_detail_link, self.detail_link_payload(), headers=self.header, timeout=self.timeout).json()
-        return response
+        response = requests.get(self.campaign_detail_link.format(self.campaign_id), timeout=self.timeout)
+        json_resp = json.loads(re.search(r"window\[decodeURIComponent\(''\)\]\(\[(.+)\]\)\;", response.text).group(1))
+        return json_resp
     
     def get_campaign_orders(self, page):
         response = requests.post(self.campaign_orders_link, self.orders_link_payload(page), headers=self.header, timeout=self.timeout).json()
@@ -51,9 +53,9 @@ class ModianClient():
 
 
 def main():
-    import pprint
-    client = ModianClient('52575')
-    pprint.pprint(client.get_campaign_orders(1))
+    # import pprint
+    client = ModianClient('78370')
+    print(client.get_campaign_details()['backer_count'])
 
 if __name__ == '__main__':
     main()
