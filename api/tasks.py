@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 from celery import task
 from django.utils.dateparse import parse_datetime
+from decimal import Decimal
 
 from .modian.utils import ModianClient
 from api.models import Campaign, Order, ModianUser, BattleCampaign, MonitorCampaign
@@ -44,7 +45,7 @@ def fetch_battle_campaign_details():
         client = ModianClient(project_id)
         try:
             campaign_details = client.get_campaign_details()
-            campaign.amount = campaign_details['backer_money']
+            campaign.amount = Decimal(campaign_details['backer_money'].replace(',',''))
             campaign.number_of_participants = campaign_details['backer_count']
             campaign.save()
         except:

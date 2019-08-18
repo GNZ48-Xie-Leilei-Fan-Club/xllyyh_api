@@ -4,6 +4,7 @@ import urllib
 import hashlib
 import time
 import re
+from decimal import Decimal
 
 
 class ModianClient():
@@ -55,7 +56,8 @@ class ModianClient():
 def main():
     # import pprint
     client = ModianClient('78370')
-    print(client.get_campaign_details()['backer_count'])
+    campaign_details = client.get_campaign_details()
+    print(Decimal(campaign_details['backer_money'].replace(',','')))
 
 if __name__ == '__main__':
     main()
