@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 
 from api.models.keyworded_response import KeywordedResponse, IgnoreNumber
-from api.serializers.keyworded_response import KeywordedResponseSerializer, IgnoreNumberSerializer
+from api.chatbot.serializers.keyworded_response import KeywordedResponseSerializer, IgnoreNumberSerializer
 
 class KeywordedResponseList(generics.ListAPIView):
     serializer_class = KeywordedResponseSerializer
