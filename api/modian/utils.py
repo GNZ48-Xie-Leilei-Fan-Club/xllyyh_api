@@ -4,6 +4,7 @@ import urllib
 import hashlib
 import time
 import re
+import ast
 from decimal import Decimal
 
 
@@ -18,6 +19,7 @@ class ModianClient():
         self.campaign_orders_link = 'https://wds.modian.com/api/project/orders'
         self.campaign_detail_link = 'https://zhongchou.modian.com/realtime/get_simple_product?ids={}'
         self.campaign_rankings_link = 'https://wds.modian.com/api/project/rankings'
+        self.campaign_amount_link = 'http://orderapi.modian.com/v45/product'
         self.timeout = 15
 
     def get_signature(self, ret):
@@ -48,16 +50,37 @@ class ModianClient():
         json_resp = json.loads(re.search(r"window\[decodeURIComponent\(''\)\]\(\[(.+)\]\)\;", response.text).group(1))
         return json_resp
     
-    def get_campaign_orders(self, page):
-        response = requests.post(self.campaign_orders_link, self.orders_link_payload(page), headers=self.header, timeout=self.timeout).json()
-        return response
+    def get_campaign_orders(self):
+        mydict = {}
+        data = {
+            'pro_id': self.campaign_id,
+        }
+        response = requests.post(self.campaign_amount_link, data)
+        # Return data.
+        return_dict = response.json()
+        # Return data successfully.
+        if return_dict['status'] == '0':
+            # Convert string to dictionary.
+            return_data = ast.literal_eval(return_dict['data'])
+
+            # Resolve info needed.
+            mydict['order_amount'] = return_data['product_info']['backer_money']
+            mydict['modian_user_id'] = return_data['product_info']['user_id']
+            mydict['modian_user_nickname'] = return_data['product_info']['username']
+            mydict['order_timestamp'] = return_data['product_info']['end_time']
+            return mydict
+        else:
+            return {}
 
 
 def main():
     # import pprint
     client = ModianClient('78370')
     campaign_details = client.get_campaign_details()
+    dict = client.get_campaign_orders()
+    print(dict)
     print(Decimal(campaign_details['backer_money'].replace(',','')))
+
 
 if __name__ == '__main__':
     main()
